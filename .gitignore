@@ -1,0 +1,98 @@
+# ================= Python 编译缓存 =================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+*.pyd
+
+# ================= 虚拟环境 =================
+.venv/
+venv/
+env/
+ENV/
+.env
+.venv.*
+
+# ================= 打包构建输出 =================
+build/
+dist/
+*.egg-info/
+*.egg
+wheels/
+
+# ================= 日志、运行时输出 =================
+logs/
+*.log
+local_logs/
+
+# ================= pytest / 测试缓存 =================
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+*.gcov
+
+# ================= mypy / 类型检查 =================
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# ================= PySide6 / Qt 特定缓存 =================
+*.qrc
+qrc_*.py
+*.ui~
+*.moc
+*.obj
+*.pdb
+*.autosave
+
+# ================= MkDocs 文档输出 =================
+site/
+.mkdocs.yml.bak
+
+# ================= IDE 编辑器 =================
+## VSCode
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+## PyCharm / IntelliJ
+.idea/
+*.iml
+*.iws
+*.out
+*.bak
+
+## Sublime
+*.sublime-project
+*.sublime-workspace
+
+# ================= OS 系统文件 =================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight‑V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ================= 本地环境配置、密钥 =================
+*.env
+*.env.local
+*.env.*.local
+secrets.json
+*.pem
+*.key
+
+# ================= 临时文件、备份 =================
+*~
+*.tmp
+temp/
+tmp/
+
+# ================= 基准测试输出 =================
+benchmarks/output/

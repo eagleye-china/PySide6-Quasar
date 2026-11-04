@@ -1,0 +1,161 @@
+pyside6-quasar/
+├── src/
+│   └── pyside6_quasar/
+│       ├── __init__.py
+│       ├── py.typed
+│       ├── core/
+│       │   ├── __init__.py
+│       │   ├── theme/
+│       │   │   ├── __init__.py
+│       │   │   ├── manager.py
+│       │   │   ├── tokens.py
+│       │   │   ├── palette.py/
+│       │   │   └── contrast.py
+│       │   ├── base/
+│       │   │   ├── __init__.py
+│       │   │   ├── mixin.py
+│       │   │   └── widget.py
+│       │   ├── router/
+│       │   │   ├── __init__.py
+│       │   │   ├── router.py
+│       │   │   ├── guard.py
+│       │   │   └── transition.py
+│       │   ├── state/
+│       │   │   ├── __init__.py
+│       │   │   ├── store.py
+│       │   │   └── slices/
+│       │   │       ├── user_slice.py
+│       │   │       └── app_slice.py
+│       │   ├── events/
+│       │   │   ├── __init__.py
+│       │   │   └── bus.py
+│       │   ├── validation/
+│       │   │   ├── __init__.py
+│       │   │   ├── rule.py
+│       │   │   ├── validator.py
+│       │   │   └── form.py
+│       │   ├── i18n/
+│       │   │   ├── __init__.py
+│       │   │   ├── translator.py
+│       │   │   └── locales/
+│       │   │       ├── zh_CN.json
+│       │   │       └── en_US.json
+│       │   └── utils/
+│       │       ├── __init__.py
+│       │       ├── dpr.py
+│       │       ├── painter.py
+│       │       ├── animation.py
+│       │       ├── color.py
+│       │       └── geometry.py
+│       ├── components/
+│       │   ├── __init__.py
+│       │   ├── primitives/
+│       │   │   ├── __init__.py
+│       │   │   ├── button/
+│       │   │   │   ├── __init__.py
+│       │   │   │   ├── button.py
+│       │   │   │   ├── variant.py
+│       │   │   │   └── ripple.py
+│       │   │   ├── input/
+│       │   │   ├── checkbox.py
+│       │   │   ├── switch.py
+│       │   │   ├── radio.py
+│       │   │   ├── slider.py
+│       │   │   ├── avatar.py
+│       │   │   ├── badge.py
+│       │   │   ├── chip.py
+│       │   │   └── progress/
+│       │   │       ├── line_progress.py
+│       │   │       └── circle_progress.py
+│       │   ├── containers/
+│       │   │   ├── __init__.py
+│       │   │   ├── card/
+│       │   │   ├── tabs/
+│       │   │   ├── dialog/
+│       │   │   ├── drawer/
+│       │   │   ├── collapse/
+│       │   │   └── grid/
+│       │   ├── data/
+│       │   │   ├── __init__.py
+│       │   │   ├── table/
+│       │   │   │   ├── __init__.py
+│       │   │   │   ├── model.py
+│       │   │   │   ├── delegate.py
+│       │   │   │   └── view.py
+│       │   │   ├── list/
+│       │   │   ├── tree/
+│       │   │   └── select/
+│       │   └── feedback/
+│       │       ├── __init__.py
+│       │       ├── toast/
+│       │       │   ├── __init__.py
+│       │       │   ├── toast.py
+│       │       │   ├── position.py
+│       │       │   └── registry.py
+│       │       ├── tooltip.py
+│       │       └── notification.py
+│       ├── layouts/
+│       │   ├── __init__.py
+│       │   ├── main_layout.py
+│       │   ├── auth_layout.py
+│       │   └── blank_layout.py
+│       ├── templates/
+│       │   ├── __init__.py
+│       │   ├── login_page.py
+│       │   ├── dashboard_page.py
+│       │   └── settings_page.py
+│       └── assets/
+│           ├── icons/
+│           │   ├── check.svg
+│           │   └── ...
+│           └── fonts/
+│               └── Roboto-Regular.ttf
+├── tests/
+│   ├── conftest.py
+│   ├── unit/
+│   │   ├── core/
+│   │   ├── components/
+│   │   └── ...
+│   ├── integration/
+│   └── visual/
+│       └── snapshots/
+├── examples/
+│   ├── 01_hello_quasar.py
+│   ├── 02_button_gallery.py
+│   ├── 03_form_validation.py
+│   ├── 04_dashboard.py
+│   └── gallery/
+│       └── components_gallery.py
+├── docs/
+│   ├── index.md
+│   ├── quickstart.md
+│   ├── architecture.md
+│   ├── theming.md
+│   ├── components/
+│   │   ├── button.md
+│   │   └── ...
+│   └── api/
+├── benchmarks/
+│   ├── bench_paint.py
+│   └── bench_theme_switch.py
+├── scripts/
+│   ├── build.py
+│   ├── release.py
+│   └── gen_icons.py
+├── .github/
+│   └── workflows/
+│       ├── ci.yml
+│       ├── release.yml
+│       └── docs.yml
+├── .pre-commit-config.yaml
+├── .editorconfig
+├── .gitignore
+├── pyproject.toml
+├── mkdocs.yml
+├── README.md
+├── README_EN.md
+├── CHANGELOG.md
+├── CONTRIBUTING.md
+├── CODE_OF_CONDUCT.md
+├── SECURITY.md
+└── LICENSE/
