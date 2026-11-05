@@ -2,13 +2,18 @@
 import sys
 
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QPixmap, QPainter, QColor
+from PySide6.QtGui import QPixmap, QPainter, QColor, QIcon
 from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame
-from pyside6_quasar import (
+from pyside_quasar import (
     Avatar, AvatarGroup, AvatarShape, AvatarSize,
     Button, ButtonVariant, Color,
     theme_manager, ThemeMode,
 )
+
+try:
+    from resources import resources_rc  # noqa
+except ImportError:
+    print("[WARN] 未找到 resources_rc，图标可能无法显示。")
 
 
 def create_demo_pixmap(color1="#4A90E2", color2="#50E3C2", size=200) -> QPixmap:
@@ -82,7 +87,7 @@ class DemoCard(QFrame):
             }}
         """)
 
-    def _on_theme_changed(self, mode):
+    def _on_theme_changed(self):
         self._update_theme()
 
 
@@ -92,14 +97,14 @@ class DemoAvatar(QWidget):
     def __init__(self):
         super().__init__()
         self.resize(1000, 800)
-        self.setWindowTitle("PySide6-Quasar · Avatar Gallery")
+        self.setWindowTitle("pyside-quasar · Avatar Gallery")
 
         self._demo_pixmap = create_demo_pixmap()
 
         theme_manager.themeChanged.connect(self._on_theme_changed)
         self._update_window_bg()
 
-        main_layout = QVBoxLayout(self)
+        main_layout = QVBoxLayout(self)  # type: ignore[arg-type]
         main_layout.setContentsMargins(50, 40, 50, 40)
         main_layout.setSpacing(20)
 
@@ -149,7 +154,8 @@ class DemoAvatar(QWidget):
         row2.setSpacing(30)
 
         row2.addWidget(self._wrap_with_caption(
-            Avatar(image=self._demo_pixmap, size=AvatarSize.XL),
+            Avatar(image=":/icons/set-up.svg", size=AvatarSize.XL),
+            # Avatar(image=self._demo_pixmap, size=AvatarSize.XL),
             "图片头像"
         ))
         row2.addWidget(self._wrap_with_caption(
@@ -262,7 +268,8 @@ class DemoAvatar(QWidget):
 
         main_layout.addStretch()
 
-    def _wrap_with_caption(self, widget: QWidget, caption: str) -> QWidget:
+    @staticmethod
+    def _wrap_with_caption(widget: QWidget, caption: str) -> QWidget:
         """辅助：把组件包裹在带标题的容器里"""
         wrapper = QWidget()
         wrapper.setStyleSheet("background: transparent;")
@@ -289,7 +296,7 @@ class DemoAvatar(QWidget):
     def _update_window_bg(self):
         self.setStyleSheet(f"background-color: {theme_manager.get_color('background')};")
 
-    def _on_theme_changed(self, mode):
+    def _on_theme_changed(self):
         self._update_window_bg()
         self.title.setStyleSheet(
             f"color: {theme_manager.get_color('text_primary')}; font-size: 22px; font-weight: bold;"
@@ -298,12 +305,14 @@ class DemoAvatar(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    app.setWindowIcon(QIcon(":/icons/set-up.svg"))
 
     # 初始化主题（默认深色）
-    from pyside6_quasar import theme_manager as tm
+    from pyside_quasar import theme_manager as tm
 
     tm.set_mode(ThemeMode.DARK)
 
     window = DemoAvatar()
+
     window.show()
     sys.exit(app.exec())

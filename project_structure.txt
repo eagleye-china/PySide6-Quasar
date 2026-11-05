@@ -1,6 +1,6 @@
-pyside6-quasar/
+pyside-quasar/
 ├── src/
-│   └── pyside6_quasar/
+│   └── pyside_quasar/
 │       ├── __init__.py
 │       ├── py.typed
 │       ├── core/

@@ -1,46 +1,52 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=68.2", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pyside6-quasar"
-version = "0.1.0"
-description = "The Quasar Framework for PySide6 — Material Design components, pure QPainter, zero QSS."
-readme = "README.md"
+name = "pyside-quasar"
+version = "0.2.0"
+description = "The Quasar Framework for PySide — Material Design components, pure QPainter, zero QSS."
+readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.10"
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
-    { name = "Your Name", email = "you@example.com" },
+    { name = "eagleye-china", email = "zdt168@sina.cn" },
 ]
+
 keywords = [
     "pyside6", "qt6", "material-design", "quasar",
-    "ui-framework", "desktop", "qpainter",
+    "ui-framework", "desktop", "qpainter", "pyside"
 ]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 4 - Beta", # 建议从 Alpha 改为 Beta，更显成熟
     "Environment :: X11 Applications :: Qt",
-    "Framework :: PySide6",
+    "Environment :: Win32 (MS Windows)",
+    "Environment :: MacOS X",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: User Interfaces",
+    "Topic :: Desktop Environment",
     "Typing :: Typed",
 ]
 dependencies = [
     "PySide6>=6.6",
-    "typing-extensions>=4.0; python_version<'3.11'",
+    "typing-extensions>=4.0; python_version<'3.13'",
 ]
 
 [project.optional-dependencies]
-dev = [
+test = [
     "pytest>=7.4",
     "pytest-qt>=4.2",
     "pytest-cov>=4.1",
+]
+lint = [
     "mypy>=1.5",
-    "ruff>=0.1.0",
-    "black>=23.9",
+    "ruff>=0.7.0",
     "pre-commit>=3.4",
     "import-linter>=2.0",
 ]
@@ -49,55 +55,126 @@ docs = [
     "mkdocstrings[python]>=0.24",
     "mkdocs-gen-files>=0.5",
 ]
+build = [
+    "nuitka>=2.4",
+]
+dev = [
+    "pyside-quasar[test,lint,docs,build]",
+]
 
 [project.urls]
-Homepage = "https://github.com/your-org/pyside6-quasar"
-Documentation = "https://your-org.github.io/pyside6-quasar"
-Repository = "https://github.com/your-org/pyside6-quasar"
-Issues = "https://github.com/your-org/pyside6-quasar/issues"
-Changelog = "https://github.com/your-org/pyside6-quasar/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/eagleye-china/pyside-quasar"
+Documentation = "https://eagleye-china.github.io/pyside-quasar"
+Repository = "https://github.com/eagleye-china/pyside-quasar"
+Issues = "https://github.com/eagleye-china/pyside-quasar/issues"
+Changelog = "https://github.com/eagleye-china/pyside-quasar/blob/main/CHANGELOG.md" # 注意：现在 GitHub 默认分支多为 master
 
-# ═══ src-layout 关键配置 ═══
+# ================= src-layout 打包配置 =================
 [tool.setuptools]
 package-dir = { "" = "src" }
 include-package-data = true
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["pyside6_quasar*"]
-exclude = ["tests*", "examples*", "docs*"]
+# ✅ 核心修复：这里必须改成 pyside_quasar
+include = ["pyside_quasar*"]
+exclude = ["tests*", "examples*", "docs*", "scripts*"]
 
 [tool.setuptools.package-data]
-pyside6_quasar = [
+# ✅ 核心修复：这里也必须是 pyside_quasar
+pyside_quasar = [
     "py.typed",
-    "assets/**/*.svg",
-    "assets/**/*.ttf",
+    "assets/icons/*.svg",
+    "assets/fonts/*.ttf",
     "core/i18n/locales/*.json",
 ]
 
-# ═══ 代码规范 ═══
-[tool.black]
-line-length = 100
-target-version = ["py310", "py311", "py312"]
-
+# ================= ruff 代码检查 & 格式化 =================
 [tool.ruff]
 line-length = 100
 target-version = "py310"
-select = ["E", "F", "I", "N", "W", "UP", "B", "C4", "SIM"]
+src = ["src", "tests", "examples", "scripts"]
 
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "C4", "SIM"]
+fix = true
+
+[tool.ruff.lint.isort]
+# ✅ 核心修复
+known-first-party = ["pyside_quasar"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+
+# ================= mypy 类型检查 =================
 [tool.mypy]
 python_version = "3.10"
 strict = true
 warn_return_any = true
 warn_unused_configs = true
 ignore_missing_imports = false
+# ✅ 核心修复
+files = ["src/pyside_quasar"]
 
-# ═══ 测试 ═══
+[[tool.mypy.overrides]]
+module = [
+    "examples.*",
+    "scripts.*",
+    "tests.*",
+]
+strict = false
+
+# ================= import-linter 分层架构约束 L0-L4 单向依赖 =================
+[tool.importlinter]
+# ✅ 核心修复
+root_package = "pyside_quasar"
+
+[[tool.importlinter.contracts.forbidden]]
+name = "core_must_not_import_components"
+modules = ["pyside_quasar.core*"]
+forbidden_modules = ["pyside_quasar.components*", "pyside_quasar.layouts*", "pyside_quasar.templates*"]
+
+[[tool.importlinter.contracts.forbidden]]
+name = "components_must_not_import_templates"
+modules = ["pyside_quasar.components*"]
+forbidden_modules = ["pyside_quasar.templates*"]
+
+[[tool.importlinter.contracts.forbidden]]
+name = "primitives_containers_data_no_reverse"
+modules = ["pyside_quasar.components.primitives*", "pyside_quasar.components.containers*"]
+forbidden_modules = ["pyside_quasar.components.data*"]
+
+# ================= pytest 测试配置 =================
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-ra --strict-markers --strict-config"
+addopts = "-ra --strict-markers --strict-config -W error::Warning"
 qt_api = "pyside6"
+markers = [
+    "unit: mark unit test",
+    "integration: mark integration test",
+    "visual: mark visual snapshot test",
+    "slow: mark slow running test",
+]
+filterwarnings = [
+    "ignore::DeprecationWarning:PySide6",
+]
 
+# ================= coverage 覆盖率 =================
 [tool.coverage.run]
-source = ["src/pyside6_quasar"]
+# ✅ 核心修复
+source = ["src/pyside_quasar"]
 branch = true
+parallel = false
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+skip_covered = false
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "@overload",
+    "raise NotImplementedError",
+]

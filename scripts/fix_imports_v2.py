@@ -7,7 +7,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
-SRC = ROOT / "src" / "pyside6_quasar"
+SRC = ROOT / "src" / "pyside_quasar"
 
 # ═══════════════════════════════════════════════════════════
 # 路径替换规则（按顺序执行，防止替换冲突）
